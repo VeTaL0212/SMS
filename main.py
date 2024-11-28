@@ -16,6 +16,7 @@ def check_balance(login, password):
 
         if response.status_code == 200:
             response_data = response.json()
+            mb.showinfo("Баланс", f"Баланс счета {response_data['money']}")
             return response_data['money']
         else:
             mb.showerror("Ошибка",f"Произошла ошибка проверки баланса {response.status_code}")
@@ -38,7 +39,7 @@ def send_sms():
 
     balance = check_balance(user, password)
     if balance:
-        if float(balance) > 10:
+        if  float(balance) > -10:
 
             if not validate_phone_number(receiver):
                 mb.showinfo("Ошибка!", "Некорректный номер телефона")
@@ -62,7 +63,7 @@ window = Tk()
 window.title("Отправка СМС")
 window.geometry("250x110")
 
-Label(text="Номер получателя: ").pack()
+Label(text="Номер получателя в формате 79*********: ").pack()
 receiver_entry = Entry()
 receiver_entry.pack()
 
