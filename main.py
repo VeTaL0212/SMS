@@ -35,8 +35,11 @@ def send_sms():
     password='VVitos134'
     sender='python2024'
     receiver=receiver_entry.get()
-    text = text_entry.get()
+    text = text_entry.get(1.0, END)
 
+    if len(text) > 160:
+        mb.showerror("Ошибка", f"Длина вашего сообщения {len(text)}. Она не может превышать 160 символов")
+        return
     balance = check_balance(user, password)
     if balance:
         if  float(balance) > -10:
@@ -61,14 +64,14 @@ def send_sms():
 
 window = Tk()
 window.title("Отправка СМС")
-window.geometry("250x110")
+window.geometry("400x200")
 
 Label(text="Номер получателя в формате 79*********: ").pack()
 receiver_entry = Entry()
 receiver_entry.pack()
 
 Label(text="Введитетекст СМС").pack()
-text_entry = Entry()
+text_entry = Text(height=6, width=30)
 text_entry.pack()
 
 send_button = Button(text="Отправить СМС", command=send_sms)
